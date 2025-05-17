@@ -10,6 +10,8 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/atotto/clipboard"
 )
 
 type OpenAIResponse struct {
@@ -155,7 +157,11 @@ func main() {
 	}
 
 	result := response_body.Output[0].Content[0].Text
-	WriteToClipboard(result)
+
 	fmt.Printf("(ง•̀_•́)ง %s\n", result)
-	fmt.Println("        ^ copied to clipboard")
+
+	err = clipboard.WriteAll(result)
+	if err == nil {
+		fmt.Println("        ^ copied to clipboard")
+	}
 }
