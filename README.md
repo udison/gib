@@ -33,7 +33,8 @@ From source:
 git clone https://github.com/yourusername/gib.git
 cd gib
 go build -o gib
-./gib
+sudo mv gib /usr/local/bin/
+gib
 ```
 
 ## Configuration

@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"os/exec"
 	"strings"
 
 	"github.com/atotto/clipboard"
@@ -72,22 +71,23 @@ type OpenAIResponse struct {
 var client = &http.Client{}
 
 func main() {
-	args := os.Args
-	// for i, v := range args {
-	// fmt.Printf("arg[%d]: %s\n", i, v)
-	// }
-
 	token, foundToken := os.LookupEnv("OPENAI_API_KEY")
 	if !foundToken || token == "" {
 		log.Fatalln("OpenAI API key not found")
 	}
 
-	os := "linux"
+	operating_system := "linux"
 
+	args := os.Args
 	msg := strings.Join(args[1:], " ")
+	if msg == "" {
+		fmt.Println("Usage:\n\tgib <text explaining the command>")
+		return
+	}
+
 	prompt := fmt.Sprintf(
 		"give me a %s command that %s. give me the command only as plain text, do not write any text other than the command itself, do not format with markdown",
-		os,
+		operating_system,
 		msg,
 	)
 	model := "gpt-4.1-mini"
